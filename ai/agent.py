@@ -1,5 +1,6 @@
 from ai.rag import SituationRAG
 from ai.prompt import build_story_prompt, build_verdict_prompt
+import re
 
 class Agent:
     def __init__(self, llm, memory, rag):
@@ -15,8 +16,19 @@ class Agent:
             situation,
             {player: response}
         )
-        verdict_text = self.llm.generate(verdict_prompt)
-        verdict = "SURVIVE" if "SURVIVE" in verdict_text else "DIE"
+        verdict_text = self.llm.generate(
+            verdict_prompt,
+            max_tokens=20,
+            temperature=0.0
+        )
+        print("++++++++++++++++++++++")
+        print(verdict_text)
+        print("++++++++++++++++++++++")
+        # verdict_text_lower = verdict_text.lower()
+        verdict_text_tokens = re.findall(r"[a-z]+", verdict_text.lower())
+
+
+        verdict = "SURVIVE" if "survive" in verdict_text_tokens else "DIE"
 
         # Phase 2: Story
         story_prompt = build_story_prompt(
