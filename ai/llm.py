@@ -1,5 +1,6 @@
 from llama_cpp import Llama
 
+
 class LocalLLM:
     def __init__(self, model_path: str):
         self.llm = Llama(
@@ -7,7 +8,7 @@ class LocalLLM:
             n_ctx=4096,
             n_threads=8,
             temperature=0.7,
-            verbose=False
+            verbose=False,
         )
 
     def generate(self, prompt: str, max_tokens=200, temperature=0.3) -> str:
@@ -15,6 +16,6 @@ class LocalLLM:
             prompt=prompt,
             max_tokens=max_tokens,
             temperature=temperature,
-            stop=["\n\n"]
+            stop=["\n\n"],
         )
         return result["choices"][0]["text"].strip()

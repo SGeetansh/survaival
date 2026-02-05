@@ -10,4 +10,3 @@ class MemoryStore:
 
     def retrieve(self, k=5):
         return self.entries[-k:]
-

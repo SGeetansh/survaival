@@ -1,5 +1,6 @@
 import json
 
+
 class SituationRAG:
     def __init__(self, path="data/situations.json"):
         with open(path, "r") as f:

@@ -5,14 +5,10 @@ def build_verdict_prompt(situation, player_responses):
     )
 
     strategies_text = "\n".join(
-        f"- {s['description']}"
-        for s in situation["viable_strategies"]
+        f"- {s['description']}" for s in situation["viable_strategies"]
     )
 
-    failures_text = "\n".join(
-        f"- {f}"
-        for f in situation["common_failures"]
-    )
+    failures_text = "\n".join(f"- {f}" for f in situation["common_failures"])
 
     return f"""
 You are survival stregetist, evalustor in a game similar to Death by AI.
@@ -50,6 +46,7 @@ Rules:
 Output EXACTLY one line:
 VERDICT: DIE or SURVIVE
 """
+
 
 def build_story_prompt(situation, player_name, verdict, player_response):
     return f"""
@@ -95,7 +92,6 @@ Begin.
 """
 
 
-
 def build_prompt(memory, situation, player_responses):
     responses_text = "\n".join(
         f"{player}: {response}"
@@ -103,14 +99,10 @@ def build_prompt(memory, situation, player_responses):
     )
 
     strategies_text = "\n".join(
-        f"- {s['description']}"
-        for s in situation["viable_strategies"]
+        f"- {s['description']}" for s in situation["viable_strategies"]
     )
 
-    failures_text = "\n".join(
-        f"- {f}"
-        for f in situation["common_failures"]
-    )
+    failures_text = "\n".join(f"- {f}" for f in situation["common_failures"])
 
     return f"""
 You are a harsh but fair AI judge in a game similar to Death by AI.
