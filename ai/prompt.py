@@ -4,31 +4,39 @@ def build_prompt(memory, scenario, player_responses):
         for player, response in player_responses.items()
     )
 
-    players = list(player_responses.keys())
-    num_players = len(players)
-
     return f"""
-You are the AI judge in a game similar to Death by AI.
+You are a harsh but fair AI judge in a game similar to Death by AI.
+
+You are skeptical and demanding.
+However, you acknowledge that survival situations are chaotic and imperfect.
+A player may survive if their plan meaningfully reduces risk and shows strong situational awareness.
 
 Scenario:
 {scenario.strip()}
 
-Players ({num_players} total):
-{', '.join(players)}
-
-Player responses:
+Player response:
 {responses_text.strip()}
 
-Task:
-- You MUST judge EVERY player listed above
-- You MUST output EXACTLY {num_players} verdict blocks
-- Do NOT stop early
+Judging rules:
+- Assume dangerous conditions, but not impossibility
+- Reward concrete, proactive, and realistic actions
+- Penalize vague plans, passivity, and reliance on luck
+- Survival does NOT require certainty, but requires a credible path to safety
 
-Output format (repeat exactly {num_players} times):
+Your task:
+- Decide whether the player SURVIVES or DIES
+- If the player survives, describe HOW they survive
+- If the player dies, describe HOW they die
+- Be blunt and unsympathetic, but rational
+
+Output format (STRICT):
 
 Player: <name>
 VERDICT: SURVIVE or DIE
-REASON: <one sentence>
+OUTCOME:
+- 2–3 sentences maximum
+- Plain, realistic description
+- No dramatization
 
 Begin now.
 """
