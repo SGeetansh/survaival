@@ -1,0 +1,35 @@
+{
+  "subway_fire": {
+    "id": "subway_fire",
+    "title": "Smoke-filled subway tunnel",
+    "description": "You are inside a subway train stopped in a tunnel. Smoke is filling the carriage, visibility is low, and emergency doors are jammed.",
+
+    "viable_strategies": [
+      {
+        "id": "stay_low",
+        "description": "Stay low to avoid smoke inhalation."
+      },
+      {
+        "id": "cover_face",
+        "description": "Cover mouth and nose with cloth to filter smoke."
+      },
+      {
+        "id": "follow_wall",
+        "description": "Follow the wall to maintain direction and avoid disorientation."
+      },
+      {
+        "id": "seek_exit",
+        "description": "Actively search for maintenance or emergency exits."
+      }
+    ],
+
+    "common_failures": [
+      "waiting passively",
+      "panicking",
+      "relying on rescue",
+      "remaining seated"
+    ],
+
+    "difficulty_notes": "Survival requires proactive movement and smoke mitigation. Passive behavior is fatal."
+  }
+}

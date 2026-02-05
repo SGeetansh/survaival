@@ -13,7 +13,14 @@ class LocalLLM:
     def generate(self, prompt: str) -> str:
         result = self.llm.create_completion(
             prompt=prompt,
-            max_tokens=150,
-            stop=["\n\n"]
+            max_tokens=80,                     # 🔒 shorter output
+            stop=[
+                "\n\n",                       # paragraph break
+                "End of",                     # cuts "End of story"
+                "END OF",
+                "Survive.",
+                "SURVIVE",
+                "DIE."
+            ]
         )
         return result["choices"][0]["text"].strip()

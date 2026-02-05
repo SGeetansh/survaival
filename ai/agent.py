@@ -1,18 +1,44 @@
-from ai.prompt import build_prompt
+from ai.rag import SituationRAG
+from ai.prompt import build_story_prompt, build_verdict_prompt
 
 class Agent:
-    def __init__(self, llm, memory):
+    def __init__(self, llm, memory, rag):
         self.llm = llm
         self.memory = memory
+        self.rag = rag
 
-    def observe(self, judgment: str):
-        # Store past judgments for consistency (RAG)
-        self.memory.add(judgment)
+    def judge(self, situation_id, player, response):
+        situation = self.rag.get(situation_id)
 
-    def judge(self, scenario: str, player_responses: dict):
-        prompt = build_prompt(
-            memory=self.memory.retrieve(),
-            scenario=scenario,
-            player_responses=player_responses
+        # Phase 1: Verdict
+        verdict_prompt = build_verdict_prompt(
+            situation,
+            {player: response}
         )
-        return self.llm.generate(prompt)
+        verdict_text = self.llm.generate(verdict_prompt)
+        verdict = "SURVIVE" if "SURVIVE" in verdict_text else "DIE"
+
+        # Phase 2: Story
+        story_prompt = build_story_prompt(
+            situation,
+            player,
+            verdict,
+            response
+        )
+        story = self.llm.generate(story_prompt)
+
+        # 🔒 HARD CONSISTENCY ENFORCEMENT
+        if verdict == "DIE" and any(word in story.lower() for word in ["escape", "survive", "safe", "rescues"]):
+            # Regenerate with extreme constraint
+            story_prompt += "\nREMINDER: The player dies. Describe death only."
+            story = self.llm.generate(story_prompt)
+
+        if verdict == "SURVIVE" and any(word in story.lower() for word in ["dies", "death", "suffocates"]):
+            story_prompt += "\nREMINDER: The player survives. Describe survival only."
+            story = self.llm.generate(story_prompt)
+
+        return {
+            "player": player,
+            "verdict": verdict,
+            "story": story.strip()
+        }
