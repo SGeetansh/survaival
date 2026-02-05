@@ -1,6 +1,6 @@
 # survaival
 
-A terminal-based survival game where an AI judge evaluates whether a player’s actions lead to survival or death in a high-risk scenario.
+A terminal based survival game where an AI judge evaluates whether a player’s actions lead to survival or death in a high risk scenario.
 
 The system focuses on **reasoning over described actions**, not keyword matching or instruction following.
 
@@ -13,7 +13,7 @@ The system focuses on **reasoning over described actions**, not keyword matching
 - Outputs a binary verdict: **SURVIVE** or **DIE**
 - Generates a short outcome consistent with the verdict
 
-All inference runs **locally** using a llama.cpp-compatible model.
+All inference runs **locally** using a llama.cpp compatible model.
 
 ---
 
@@ -33,14 +33,15 @@ All inference runs **locally** using a llama.cpp-compatible model.
 - Python 3.13
 - llama.cpp
 - Local LLM (Qwen 2.5 7B, quantized)
-- Terminal-based execution
+- Terminal based execution
 
 ---
 
 ## Run
 
 ```bash
-python3 -m tests.test_agent
+chmod +x setup.sh
+./setup.sh
 ```
 
 ## Status
