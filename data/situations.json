@@ -31,5 +31,315 @@
     ],
 
     "difficulty_notes": "Survival requires proactive movement and smoke mitigation. Passive behavior is fatal."
+  },
+  
+  "avalanche_burial": {
+    "id": "avalanche_burial",
+    "title": "Buried under avalanche snow",
+    "description": "You've been caught in an avalanche and are partially buried under dense, compacted snow. You have limited air supply and cannot see daylight. Your limbs are partially mobile.",
+    "viable_strategies": [
+      {
+        "id": "create_air_pocket",
+        "description": "Cup hands over face immediately to create a breathing air pocket before snow sets."
+      },
+      {
+        "id": "spit_to_find_down",
+        "description": "Spit to determine which direction is down, then dig the opposite way."
+      },
+      {
+        "id": "conserve_oxygen",
+        "description": "Breathe slowly and avoid panicked movement to extend air supply."
+      },
+      {
+        "id": "compact_snow_upward",
+        "description": "Push compacted snow upward and outward in small deliberate motions."
+      }
+    ],
+    "common_failures": [
+      "thrashing wildly",
+      "screaming and wasting oxygen",
+      "digging downward",
+      "assuming rescuers will find you quickly"
+    ],
+    "difficulty_notes": "Snow sets like concrete within minutes. The air pocket creation window is extremely short."
+  },
+
+  "capsized_boat": {
+    "id": "capsized_boat",
+    "title": "Capsized boat in open water",
+    "description": "Your small vessel has capsized in cold open water, miles from shore. The hull is floating inverted above you. You are treading water with no life jacket.",
+    "viable_strategies": [
+      {
+        "id": "cling_to_hull",
+        "description": "Stay close to the inverted hull — it provides buoyancy and makes you visible to rescuers."
+      },
+      {
+        "id": "minimize_movement",
+        "description": "Limit movement to reduce heat loss and delay hypothermia onset."
+      },
+      {
+        "id": "heat_escape_lessening_posture",
+        "description": "Adopt HELP posture — draw knees to chest to protect core heat."
+      },
+      {
+        "id": "signal_passing_vessels",
+        "description": "Use any reflective object, whistle, or arm signals to attract attention."
+      }
+    ],
+    "common_failures": [
+      "swimming for shore",
+      "removing clothing in the water",
+      "constant panicked movement",
+      "abandoning the hull"
+    ],
+    "difficulty_notes": "Cold water kills faster than drowning. Swimming expends heat rapidly and is rarely survivable over distance."
+  },
+
+  "desert_breakdown": {
+    "id": "desert_breakdown",
+    "title": "Vehicle breakdown in remote desert",
+    "description": "Your car has broken down on an unmaintained desert track. It is 42°C, you have half a bottle of water, and the nearest settlement is at least 40km away.",
+    "viable_strategies": [
+      {
+        "id": "stay_with_vehicle",
+        "description": "Remain with the vehicle — it is far easier to spot from the air or road than a person on foot."
+      },
+      {
+        "id": "shade_under_car",
+        "description": "Rest in the shade of the car during peak heat hours to dramatically cut water loss."
+      },
+      {
+        "id": "ration_water",
+        "description": "Take small sips only — do not drink all water at once regardless of thirst."
+      },
+      {
+        "id": "signal_with_mirror",
+        "description": "Use mirrors, glass, or metallic surfaces to signal aircraft or distant vehicles."
+      }
+    ],
+    "common_failures": [
+      "walking toward the settlement",
+      "drinking all water immediately",
+      "moving during midday heat",
+      "leaving the vehicle to find help"
+    ],
+    "difficulty_notes": "A walking human in extreme desert heat can die within hours. The vehicle is a survival asset, not a trap."
+  },
+
+  "building_collapse": {
+    "id": "building_collapse",
+    "title": "Trapped under collapsed building",
+    "description": "An earthquake has caused a partial building collapse. You are trapped in a void space under rubble. You are injured but conscious. Dust is heavy in the air.",
+    "viable_strategies": [
+      {
+        "id": "tap_on_pipes",
+        "description": "Tap rhythmically on pipes or metal — it travels farther than voice and conserves energy."
+      },
+      {
+        "id": "cover_mouth",
+        "description": "Cover mouth and nose with fabric to avoid inhaling concrete dust."
+      },
+      {
+        "id": "avoid_moving_rubble",
+        "description": "Do not pull or shift surrounding debris, which can destabilize the void above you."
+      },
+      {
+        "id": "conserve_energy",
+        "description": "Stay still and calm to reduce oxygen consumption and manage injuries."
+      }
+    ],
+    "common_failures": [
+      "shouting continuously until exhausted",
+      "attempting to dig yourself out",
+      "shifting large rubble",
+      "ignoring dust inhalation"
+    ],
+    "difficulty_notes": "Secondary collapses kill many survivors. Patience and signaling discipline are critical."
+  },
+
+  "riptide": {
+    "id": "riptide",
+    "title": "Caught in a coastal riptide",
+    "description": "You are swimming at a beach and have been pulled into a fast-moving riptide current. The shore is receding quickly. You are a moderate swimmer.",
+    "viable_strategies": [
+      {
+        "id": "swim_parallel",
+        "description": "Swim parallel to the shoreline to exit the narrow rip channel, not against it."
+      },
+      {
+        "id": "float_and_conserve",
+        "description": "If exhausted, float on your back and conserve energy rather than fighting the current."
+      },
+      {
+        "id": "signal_for_help",
+        "description": "Wave one arm above your head — the universal distress signal for swimmers."
+      },
+      {
+        "id": "angle_back_to_shore",
+        "description": "Once out of the rip channel, swim at a diagonal angle back toward shore using the waves."
+      }
+    ],
+    "common_failures": [
+      "swimming directly toward shore",
+      "exhausting yourself fighting the current",
+      "panicking and thrashing",
+      "diving under waves repeatedly"
+    ],
+    "difficulty_notes": "Riptides are narrow but powerful. Fighting them head-on causes drowning by exhaustion in minutes."
+  },
+
+  "lightning_storm_open_field": {
+    "id": "lightning_storm_open_field",
+    "title": "Caught in lightning storm in open terrain",
+    "description": "You are hiking on an exposed ridge when a fast-moving electrical storm rolls in. There is no shelter within 2km. Lightning is striking within 500 meters.",
+    "viable_strategies": [
+      {
+        "id": "leave_high_ground",
+        "description": "Immediately descend from any elevated position — ridges and peaks attract strikes."
+      },
+      {
+        "id": "lightning_crouch",
+        "description": "Crouch on the balls of your feet, feet together, hands over ears — minimizing ground contact and profile."
+      },
+      {
+        "id": "avoid_tall_objects",
+        "description": "Stay away from isolated trees, poles, or rock formations that attract strikes."
+      },
+      {
+        "id": "spread_group_out",
+        "description": "If in a group, spread out at least 20m apart to avoid a single strike incapacitating everyone."
+      }
+    ],
+    "common_failures": [
+      "sheltering under a tall isolated tree",
+      "lying flat on the ground",
+      "grouping together under one tree",
+      "continuing to hike toward shelter"
+    ],
+    "difficulty_notes": "Lying flat maximizes ground current exposure. The crouch position is counterintuitive but correct."
+  },
+
+  "house_fire_escape": {
+    "id": "house_fire_escape",
+    "title": "Waking to a house fire at night",
+    "description": "You wake at 2am to a smoke alarm. Your bedroom door is closed. The hallway outside is unknown. You are on the second floor with a window above a sloped roof.",
+    "viable_strategies": [
+      {
+        "id": "test_door_with_back_of_hand",
+        "description": "Touch the door with the back of your hand before opening — a hot door means fire is directly outside."
+      },
+      {
+        "id": "stay_low_and_crawl",
+        "description": "If opening the door, stay low and crawl — breathable air is within 30cm of the floor."
+      },
+      {
+        "id": "seal_door_gaps",
+        "description": "If door is hot, seal gaps with clothing to delay smoke entry and buy time."
+      },
+      {
+        "id": "window_exit_and_hang",
+        "description": "Open window, hang from ledge to reduce drop height, then release to land and roll."
+      }
+    ],
+    "common_failures": [
+      "opening a hot door without checking",
+      "standing upright in smoke",
+      "returning for belongings",
+      "jumping from window without hanging first"
+    ],
+    "difficulty_notes": "Toxic smoke renders people unconscious within 2-3 minutes. Speed and low posture are non-negotiable."
+  },
+
+  "open_ocean_survival": {
+    "id": "open_ocean_survival",
+    "title": "Adrift in open ocean after shipwreck",
+    "description": "Your vessel has sunk. You are in a life raft with two others, no motor, limited supplies, and no confirmed rescue timeline. You are 200km from the nearest coast.",
+    "viable_strategies": [
+      {
+        "id": "collect_rainwater",
+        "description": "Set up any available container or tarp to collect rainwater — the only safe hydration source."
+      },
+      {
+        "id": "ration_food_aggressively",
+        "description": "Limit food to bare minimum — digestion accelerates dehydration in a salt environment."
+      },
+      {
+        "id": "maintain_signaling_watch",
+        "description": "Assign rotating watch shifts to continuously scan and signal any passing aircraft or vessels."
+      },
+      {
+        "id": "protect_from_sun",
+        "description": "Cover all exposed skin and stay under any shade — sun exposure accelerates dehydration fatally."
+      }
+    ],
+    "common_failures": [
+      "drinking seawater",
+      "consuming all food in first 24 hours",
+      "swimming to scout for land",
+      "sleeping through signaling opportunities"
+    ],
+    "difficulty_notes": "Drinking seawater accelerates death. The primary killers are dehydration, sun exposure, and despair-driven poor decisions."
+  },
+
+  "thin_ice": {
+    "id": "thin_ice",
+    "title": "Fallen through thin ice",
+    "description": "You have broken through frozen lake ice. You are submerged to the chest in near-freezing water. The ice edge you broke through is within arm's reach.",
+    "viable_strategies": [
+      {
+        "id": "act_in_first_60_seconds",
+        "description": "Use the initial cold shock adrenaline — your muscles will seize within 60-90 seconds, act immediately."
+      },
+      {
+        "id": "kick_and_claw_onto_ice",
+        "description": "Kick legs to raise body horizontal, then claw and pull onto the ice surface in the direction you came from."
+      },
+      {
+        "id": "roll_away_from_hole",
+        "description": "Once on the surface, roll — do not stand — to distribute weight and avoid re-breaking."
+      },
+      {
+        "id": "crawl_to_shore_immediately",
+        "description": "Crawl to shore without stopping — hypothermia will incapacitate you within minutes of exiting the water."
+      }
+    ],
+    "common_failures": [
+      "trying to climb straight up on the ice edge",
+      "waiting for help instead of self-rescuing",
+      "standing up once on the ice",
+      "removing wet clothes before reaching shelter"
+    ],
+    "difficulty_notes": "Cold incapacitation is rapid and total. There is a narrow window of physical capability before muscles stop responding."
+  },
+
+  "flash_flood_canyon": {
+    "id": "flash_flood_canyon",
+    "title": "Flash flood in a slot canyon",
+    "description": "You are hiking a narrow slot canyon when you hear a distant roar. Water begins rising around your ankles. The canyon walls are sheer with no obvious exit behind you.",
+    "viable_strategies": [
+      {
+        "id": "climb_immediately",
+        "description": "Climb the canyon wall using any available ledge, crack, or feature — water rises faster than you can run."
+      },
+      {
+        "id": "drop_heavy_gear",
+        "description": "Abandon your pack and all heavy gear immediately — it will drag you under."
+      },
+      {
+        "id": "look_for_high_ledges",
+        "description": "Target any ledge, pothole, or carved shelf above the waterline — even a meter of height can save you."
+      },
+      {
+        "id": "avoid_running_downstream",
+        "description": "Do not run with the flood — debris and hydraulic forces in a channeled flood are lethal."
+      }
+    ],
+    "common_failures": [
+      "running downstream with the water",
+      "attempting to swim through the flood",
+      "keeping heavy backpack on while climbing",
+      "waiting to see how high water rises"
+    ],
+    "difficulty_notes": "Flash floods in slot canyons move at car speed carrying boulders. Vertical escape is the only option."
   }
 }

@@ -1,9 +1,10 @@
 import time
+import json
 from ai.agent import Agent
 from ai.memory import MemoryStore
 from ai.llm import LocalLLM
 from ai.rag import SituationRAG
-
+import random
 
 # ----------------------------
 # Setup
@@ -25,6 +26,9 @@ def divider():
     print("\n" + "=" * 50 + "\n")
 
 
+situations = open("data/situations.json")
+situations_dict = json.load(situations)
+print(type(situations_dict.keys))
 # ----------------------------
 # Game Start
 # ----------------------------
@@ -34,8 +38,11 @@ print("🧠 DEATH BY AI — SOLO MODE")
 divider()
 
 # Pick a situation (later: random)
-situation_id = "subway_fire"
-situation = rag.get(situation_id)
+situation_id = list(situations_dict.keys())
+print(situation_id)
+situation = rag.get(random.choice(situation_id))
+
+player_name = input("Enter your name: ").strip() or "Player"
 
 print("SITUATION:")
 print(situation["description"])
@@ -49,7 +56,6 @@ divider()
 # Player Input
 # ----------------------------
 
-player_name = input("Enter your name: ").strip() or "Player"
 
 print("\nYour response:")
 response = input("> ").strip()
