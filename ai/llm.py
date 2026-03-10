@@ -11,11 +11,13 @@ class LocalLLM:
             verbose=False,
         )
 
-    def generate(self, prompt: str, max_tokens=200, temperature=0.3) -> str:
+    def generate(
+        self, prompt: str, max_tokens: int = 200, temperature: float = 0.3
+    ) -> str:
         result = self.llm.create_completion(
             prompt=prompt,
             max_tokens=max_tokens,
             temperature=temperature,
             stop=["\n\n"],
         )
-        return result["choices"][0]["text"].strip()
+        return result["choices"][0]["text"].strip()  # type: ignore

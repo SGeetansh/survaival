@@ -6,5 +6,5 @@ class SituationRAG:
         with open(path, "r") as f:
             self.situations = json.load(f)
 
-    def get(self, situation_id: str):
+    def get(self, situation_id: str) -> dict:
         return self.situations[situation_id]

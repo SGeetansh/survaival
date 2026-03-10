@@ -1,7 +1,7 @@
 class MemoryStore:
-    def __init__(self, max_items=50):
-        self.entries = []
-        self.max_items = max_items
+    def __init__(self, max_items: int = 50):
+        self.entries: list = []
+        self.max_items: int = max_items
 
     def add(self, text: str):
         self.entries.append(text)
