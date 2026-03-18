@@ -5,6 +5,7 @@ from ai.memory import MemoryStore
 from ai.llm import LocalLLM
 from ai.rag import SituationRAG
 import random
+from game.engine import GameEngine
 
 # ----------------------------
 # Setup
@@ -15,7 +16,7 @@ llm = LocalLLM("models/qwen2.5-7b-instruct-q4_k_m.gguf")
 memory = MemoryStore()
 rag = SituationRAG("data/situations.json")
 agent = Agent(llm, memory, rag)
-
+engine = GameEngine(agent, rag)
 
 # ----------------------------
 # Helpers
@@ -39,7 +40,8 @@ divider()
 
 # Pick a situation (later: random)
 situation_ids = list(situations_dict.keys())
-situation = rag.get(random.choice(situation_ids))
+random_situation_id = random.choice(situation_ids)
+situation = rag.get(random_situation_id)
 
 player_name = input("Enter your name: ").strip() or "Player"
 
@@ -69,11 +71,10 @@ time.sleep(1)
 print("🤖 AI JUDGEMENT")
 divider()
 
-result = agent.judge(
-    situation_id="subway_fire",
-    player=player_name,
-    response=response,
+results = engine.run_round(
+    situation_id=situation["id"], player_responses={player_name: response}
 )
+result = results["results"][0]
 
 
 print(f"Player: {result['player']}")
