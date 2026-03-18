@@ -1,7 +1,9 @@
-from ai.agent import Agent
-from ai.memory import MemoryStore
-from ai.llm import LocalLLM
-from ai.rag import SituationRAG
+from __future__ import annotations
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from ai.agent import Agent
+    from ai.rag import SituationRAG
 
 
 class GameEngine:
