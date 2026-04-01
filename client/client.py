@@ -9,9 +9,24 @@ logger = get_logger(__name__)
 HOST = "127.0.0.1"
 PORT = 5555
 
+# This flag tells main thread:
+# "next input should be treated as game response"
+waiting_for_response = False
+
 
 def receive_messages(sock: socket.socket) -> None:
+    """
+    Runs in a separate thread.
+    Responsible ONLY for:
+    - receiving messages
+    - printing messages
+    - updating flags (no input here!)
+    """
+    global waiting_for_response
+
     buffer = ""
+    logger.info("[RECEIVER] Started listening")
+
     while True:
         try:
             data = sock.recv(1024).decode()
@@ -21,14 +36,46 @@ def receive_messages(sock: socket.socket) -> None:
 
             buffer += data
 
+            # process complete messages
             while "\n" in buffer:
                 msg, buffer = buffer.split("\n", 1)
                 message = json.loads(msg)
 
                 logger.info(f"[RECEIVED] {message}")
 
-                # Only print non-system join confirmations here
-                if message["type"] != "system":
+                msg_type = message.get("type")
+
+                # ---------------- CHAT ----------------
+                if msg_type == "chat":
+                    print(f"{message['name']}: {message['message']}")
+
+                # ---------------- SYSTEM ----------------
+                elif msg_type == "system":
+                    print(f"[SYSTEM] {message['message']}")
+
+                # ---------------- SITUATION ----------------
+                elif msg_type == "situation":
+                    data = message.get("data")
+
+                    if not data:
+                        logger.error(f"[INVALID SITUATION MESSAGE] {message}")
+                        continue
+
+                    print("\n========== GAME START ==========")
+                    print("SITUATION:")
+                    print(message["data"])
+                    print("\nYou have 60 seconds. Type your response:")
+
+                    # Signal main thread to send response instead of chat
+                    waiting_for_response = True
+
+                # ---------------- AI RESULT ----------------
+                elif msg_type == "ai_result":
+                    print(f"\n{message['player']} → {message['verdict']}")
+                    print(message["story"])
+
+                # ---------------- FALLBACK ----------------
+                else:
                     print(message)
 
         except Exception as e:
@@ -54,6 +101,10 @@ def join_server(client: socket.socket) -> None:
         # wait for server response
         while True:
             data = client.recv(1024).decode()
+            if not data:
+                logger.error("[JOIN] No response from server")
+                continue
+
             buffer += data
 
             if "\n" not in buffer:
@@ -61,19 +112,27 @@ def join_server(client: socket.socket) -> None:
 
             msg, buffer = buffer.split("\n", 1)
             response = json.loads(msg)
+            logger.info(f"[JOIN RESPONSE] {response}")
 
             if response["type"] == "system":
                 print(response["message"])
+                logger.info(f"[JOIN SUCCESS] {name}")
                 return  # success → exit join loop
 
             elif response["type"] == "error":
                 print("Error:", response["message"])
+                logger.warning(f"[JOIN FAILED] {name}")
                 break  # retry name input
 
 
 def start_client():
+    global waiting_for_response
+
     logger.info(f"[Client Start] Starting client...")
+
     client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+
+    # connection to server
     try:
         client.connect((HOST, PORT))
         logger.info(f"[CONNECTED] to {HOST}:{PORT}")
@@ -84,7 +143,7 @@ def start_client():
     # Step 1: Join properly
     join_server(client)
 
-    # Step 2: Start async receiver
+    # Step 2: Start receiver
     threading.Thread(
         target=receive_messages, args=(client,), daemon=True
     ).start()
@@ -97,17 +156,42 @@ def start_client():
             msg = input()
 
             if not msg.strip():
-                logger.warning("[CHAT] Empty message ignored")
+                logger.warning("[INPUT] Empty message ignored")
                 continue
 
             logger.info(f"[SENT] {msg}")
 
-            client.send(
-                (json.dumps({"type": "chat", "message": msg}) + "\n").encode()
-            )
+            # ---------------- READY COMMAND ----------------
+            if msg.lower() == "ready":
+                logger.info("[READY SENT]")
+
+                client.send((json.dumps({"type": "ready"}) + "\n").encode())
+                continue
+
+            # ---------------- RESPONSE MODE ----------------
+            if waiting_for_response:
+                logger.info(f"[RESPONSE SENT] {msg}")
+
+                client.send(
+                    (
+                        json.dumps({"type": "response", "text": msg}) + "\n"
+                    ).encode()
+                )
+
+                waiting_for_response = False
+
+            # ---------------- CHAT MODE ----------------
+            else:
+                logger.info(f"[CHAT SENT] {msg}")
+
+                client.send(
+                    (
+                        json.dumps({"type": "chat", "message": msg}) + "\n"
+                    ).encode()
+                )
 
         except Exception as e:
-            logger.error(f"[CHAT ERROR] {e}")
+            logger.error(f"[MAIN LOOP ERROR] {e}")
             break
 
 

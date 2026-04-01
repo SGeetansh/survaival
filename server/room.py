@@ -1,7 +1,8 @@
 class Room:
     def __init__(self):
         self.players: list = []
-        self.state = "WAITING"  # WAITING | IN_GAME
+        self.state = "WAITING"
+        self.situation_id = None
 
     def add_player(self, player):
         self.players.append(player)
