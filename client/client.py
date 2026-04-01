@@ -1,17 +1,22 @@
 import socket
 import threading
 import json
+from common.logger import setup_logging, get_logger
+
+setup_logging()
+logger = get_logger(__name__)
 
 HOST = "127.0.0.1"
 PORT = 5555
 
 
-def receive_messages(sock):
+def receive_messages(sock: socket.socket) -> None:
     buffer = ""
     while True:
         try:
             data = sock.recv(1024).decode()
             if not data:
+                logger.warning("[RECEIVER] Server closed connection")
                 break
 
             buffer += data
@@ -20,15 +25,18 @@ def receive_messages(sock):
                 msg, buffer = buffer.split("\n", 1)
                 message = json.loads(msg)
 
+                logger.info(f"[RECEIVED] {message}")
+
                 # Only print non-system join confirmations here
                 if message["type"] != "system":
                     print(message)
 
-        except:
+        except Exception as e:
+            logger.error(f'"[RECEIVER ERROR] {e}"')
             break
 
 
-def join_server(client):
+def join_server(client: socket.socket) -> None:
     buffer = ""
 
     while True:
@@ -64,8 +72,14 @@ def join_server(client):
 
 
 def start_client():
+    logger.info(f"[Client Start] Starting client...")
     client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    client.connect((HOST, PORT))
+    try:
+        client.connect((HOST, PORT))
+        logger.info(f"[CONNECTED] to {HOST}:{PORT}")
+    except Exception as e:
+        logger.error(f"[CONNECTION FAILED] {e}")
+        return
 
     # Step 1: Join properly
     join_server(client)
@@ -76,15 +90,25 @@ def start_client():
     ).start()
 
     # Step 3: Chat loop
+    logger.info("[CHAT LOOP] Ready to send messages")
+
     while True:
-        msg = input()
+        try:
+            msg = input()
 
-        if not msg.strip():
-            continue
+            if not msg.strip():
+                logger.warning("[CHAT] Empty message ignored")
+                continue
 
-        client.send(
-            (json.dumps({"type": "chat", "message": msg}) + "\n").encode()
-        )
+            logger.info(f"[SENT] {msg}")
+
+            client.send(
+                (json.dumps({"type": "chat", "message": msg}) + "\n").encode()
+            )
+
+        except Exception as e:
+            logger.error(f"[CHAT ERROR] {e}")
+            break
 
 
 if __name__ == "__main__":
